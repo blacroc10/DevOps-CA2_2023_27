@@ -1,0 +1,7 @@
+- name: reload config
+  ansible.builtin.copy:
+    dest: /var/lib/truthgraph/api/reload.stamp
+    content: "reloaded\n"
+    owner: "{{ app_user }}"
+    group: "{{ app_group }}"
+    mode: "0644"

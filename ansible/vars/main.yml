@@ -1,0 +1,22 @@
+app_user: truthsvc
+app_group: truthgraph
+app_dir: /opt/truthgraph/api
+config_path: /etc/truthgraph/api/app.conf
+service_name: truthgraph
+app_version: v1
+log_level: info
+packages:
+  - curl
+  - ca-certificates
+  - python3
+directories:
+  - path: /opt/truthgraph/api
+    mode: "0755"
+  - path: /opt/truthgraph/api/app
+    mode: "0755"
+  - path: /var/lib/truthgraph/api
+    mode: "0750"
+  - path: /var/log/truthgraph/api
+    mode: "0750"
+  - path: /etc/truthgraph/api
+    mode: "0755"

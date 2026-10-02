@@ -1,0 +1,140 @@
+===== check =====
+
+PLAY [Configure the TruthGraph API runtime] ************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Install runtime packages] ************************************************
+changed: [localhost]
+
+TASK [Create service group] ****************************************************
+changed: [localhost]
+
+TASK [Create service user] *****************************************************
+changed: [localhost]
+
+TASK [Create application directories] ******************************************
+changed: [localhost] => (item={'path': '/opt/truthgraph/api', 'mode': '0755'})
+changed: [localhost] => (item={'path': '/opt/truthgraph/api/app', 'mode': '0755'})
+changed: [localhost] => (item={'path': '/var/lib/truthgraph/api', 'mode': '0750'})
+changed: [localhost] => (item={'path': '/var/log/truthgraph/api', 'mode': '0750'})
+changed: [localhost] => (item={'path': '/etc/truthgraph/api', 'mode': '0755'})
+
+TASK [Render service config] ***************************************************
+changed: [localhost]
+
+TASK [Copy TruthGraph application package] *************************************
+changed: [localhost]
+
+TASK [Copy requirements] *******************************************************
+changed: [localhost]
+
+RUNNING HANDLER [reload config] ************************************************
+changed: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=9    changed=8    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+===== run 1 =====
+
+PLAY [Configure the TruthGraph API runtime] ************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Install runtime packages] ************************************************
+changed: [localhost]
+
+TASK [Create service group] ****************************************************
+changed: [localhost]
+
+TASK [Create service user] *****************************************************
+changed: [localhost]
+
+TASK [Create application directories] ******************************************
+changed: [localhost] => (item={'path': '/opt/truthgraph/api', 'mode': '0755'})
+changed: [localhost] => (item={'path': '/opt/truthgraph/api/app', 'mode': '0755'})
+changed: [localhost] => (item={'path': '/var/lib/truthgraph/api', 'mode': '0750'})
+changed: [localhost] => (item={'path': '/var/log/truthgraph/api', 'mode': '0750'})
+changed: [localhost] => (item={'path': '/etc/truthgraph/api', 'mode': '0755'})
+
+TASK [Render service config] ***************************************************
+changed: [localhost]
+
+TASK [Copy TruthGraph application package] *************************************
+changed: [localhost]
+
+TASK [Copy requirements] *******************************************************
+changed: [localhost]
+
+RUNNING HANDLER [reload config] ************************************************
+changed: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=9    changed=8    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+===== run 2 =====
+
+PLAY [Configure the TruthGraph API runtime] ************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Install runtime packages] ************************************************
+ok: [localhost]
+
+TASK [Create service group] ****************************************************
+ok: [localhost]
+
+TASK [Create service user] *****************************************************
+ok: [localhost]
+
+TASK [Create application directories] ******************************************
+ok: [localhost] => (item={'path': '/opt/truthgraph/api', 'mode': '0755'})
+ok: [localhost] => (item={'path': '/opt/truthgraph/api/app', 'mode': '0755'})
+ok: [localhost] => (item={'path': '/var/lib/truthgraph/api', 'mode': '0750'})
+ok: [localhost] => (item={'path': '/var/log/truthgraph/api', 'mode': '0750'})
+ok: [localhost] => (item={'path': '/etc/truthgraph/api', 'mode': '0755'})
+
+TASK [Render service config] ***************************************************
+ok: [localhost]
+
+TASK [Copy TruthGraph application package] *************************************
+ok: [localhost]
+
+TASK [Copy requirements] *******************************************************
+ok: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=8    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+===== verify =====
+uid=999(truthsvc) gid=1001(truthgraph) groups=1001(truthgraph)
+--- conf ---
+# Managed by Ansible. Do not edit on the host.
+service_name=truthgraph
+app_version=v1
+log_level=info
+app_dir=/opt/truthgraph/api
+listen_port=8000
+neo4j_uri=bolt://neo4j:7687
+--- app ---
+__init__.py
+__pycache__
+claim_extractor.py
+config.py
+evidence_graph.py
+evidence_retriever.py
+exceptions.py
+graphtrust_scorer.py
+input_handler.py
+llm_client.py
+main.py
+models.py
+multi_agent.py
+neo4j_repository.py
+pipeline.py
+relationship_detector.py
+retry.py
+verdict_engine.py

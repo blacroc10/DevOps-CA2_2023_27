@@ -1,0 +1,52 @@
+===== api pods before rollout =====
+NAME                   START                  RESTARTS
+api-55db8ff6cb-57ddx   2026-10-02T19:06:28Z   3
+api-55db8ff6cb-pmhhx   2026-10-02T19:06:28Z   3
+===== start traffic against api =====
+pod/traffic created
+pod/traffic condition met
+===== roll api v1 -> v2 =====
+deployment.apps/api patched
+Waiting for deployment "api" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "api" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "api" rollout to finish: 1 old replicas are pending termination...
+deployment "api" successfully rolled out
+deployment.apps/api 
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+
+===== api version =====
+{"service":"truthgraph","version":"v2"}
+===== traffic result =====
+ok=804 fail=0
+===== bad v3 (readiness fails) =====
+deployment.apps/api env updated
+Waiting for deployment "api" rollout to finish: 1 out of 2 new replicas have been updated...
+rollout_status_exit=1
+NAME                   READY   STATUS    RESTARTS   AGE   IP            NODE                NOMINATED NODE   READINESS GATES
+api-6c755d47bd-82xkp   1/1     Running   0          86s   10.244.0.26   ca2-control-plane   <none>           <none>
+api-6c755d47bd-n62d2   1/1     Running   0          80s   10.244.0.27   ca2-control-plane   <none>           <none>
+api-6db98df7cf-jkfkk   0/1     Running   0          40s   10.244.0.28   ca2-control-plane   <none>           <none>
+===== service still answers on the previous pods =====
+{"service":"truthgraph","version":"v2"}
+===== rollback =====
+deployment.apps/api rolled back
+deployment "api" successfully rolled out
+deployment.apps/api 
+REVISION  CHANGE-CAUSE
+1         <none>
+3         <none>
+4         <none>
+
+{"service":"truthgraph","version":"v2"}
+{"status":"ok","neo4j":"connected"}
+NAME                     READY   STATUS        RESTARTS   AGE    IP            NODE                NOMINATED NODE   READINESS GATES
+api-6c755d47bd-82xkp     1/1     Running       0          87s    10.244.0.26   ca2-control-plane   <none>           <none>
+api-6c755d47bd-n62d2     1/1     Running       0          81s    10.244.0.27   ca2-control-plane   <none>           <none>
+api-6db98df7cf-jkfkk     0/1     Terminating   0          41s    10.244.0.28   ca2-control-plane   <none>           <none>
+neo4j-7cbfb4b68b-7rx26   1/1     Running       0          109s   10.244.0.24   ca2-control-plane   <none>           <none>
+traffic                  0/1     Completed     0          88s    10.244.0.25   ca2-control-plane   <none>           <none>

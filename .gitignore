@@ -1,0 +1,7 @@
+.venv/
+.venv311/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+.env
+service/.env

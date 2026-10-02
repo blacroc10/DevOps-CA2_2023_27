@@ -1,0 +1,12 @@
+fastapi==0.116.1
+uvicorn[standard]==0.35.0
+pydantic==2.11.7
+pydantic-settings==2.10.1
+python-dotenv==1.1.1
+httpx==0.28.1
+tavily-python==0.7.10
+trafilatura==2.0.0
+neo4j==5.28.2
+pytest==8.4.1
+pytest-asyncio==1.1.0
+prometheus-client==0.26.0

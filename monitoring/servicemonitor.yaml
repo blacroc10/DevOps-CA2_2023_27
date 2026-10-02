@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: api
+  namespace: truthgraph
+  labels:
+    release: monitoring
+    app: api
+spec:
+  selector:
+    matchLabels:
+      app: api
+  namespaceSelector:
+    matchNames:
+      - truthgraph
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s
+      honorLabels: true

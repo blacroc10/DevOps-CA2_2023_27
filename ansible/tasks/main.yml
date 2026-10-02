@@ -1,0 +1,53 @@
+- name: Install runtime packages
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Create service group
+  ansible.builtin.group:
+    name: "{{ app_group }}"
+    state: present
+
+- name: Create service user
+  ansible.builtin.user:
+    name: "{{ app_user }}"
+    group: "{{ app_group }}"
+    shell: /usr/sbin/nologin
+    create_home: false
+    system: true
+
+- name: Create application directories
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ app_user }}"
+    group: "{{ app_group }}"
+    mode: "{{ item.mode }}"
+  loop: "{{ directories }}"
+
+- name: Render service config
+  ansible.builtin.template:
+    src: "{{ playbook_dir }}/templates/app.conf.j2"
+    dest: "{{ config_path }}"
+    owner: "{{ app_user }}"
+    group: "{{ app_group }}"
+    mode: "0640"
+  notify: reload config
+
+- name: Copy TruthGraph application package
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/../service/app/"
+    dest: "{{ app_dir }}/app/"
+    owner: "{{ app_user }}"
+    group: "{{ app_group }}"
+    mode: "0644"
+
+- name: Copy requirements
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/../service/requirements.txt"
+    dest: "{{ app_dir }}/requirements.txt"
+    owner: "{{ app_user }}"
+    group: "{{ app_group }}"
+    mode: "0644"

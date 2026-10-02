@@ -1,0 +1,9 @@
+flowchart LR
+  dev[Developer push to main] --> gha[GitHub Actions]
+  gha --> test[test: pytest]
+  test --> build[build-push: buildx to GHCR]
+  build --> kind[deploy: kind cluster]
+  kind --> apply[kubectl apply api and Neo4j]
+  apply --> smoke[rollout status and /health]
+  smoke -->|failure| undo[rollout undo and fail]
+  smoke -->|success| live[Service ready]
