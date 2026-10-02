@@ -92,7 +92,26 @@ Dashboard: **TruthGraph API** (uptime, latency, error rate). Time range: last 15
 
 ## Evidence from this machine
 
-`docs/evidence/ansible.txt` is the playbook check, the first apply, and the second apply (`changed=0`). `docs/evidence/rollout.txt` is the v1 to v2 rolling update (`ok=804 fail=0`), the failed v3 readiness gate, and the rollback to v2. `screenshots/grafana-truthgraph.png` is the TruthGraph API dashboard after that run: scrape up, two ready replicas, error ratio, request rate, latency, and per-pod uptime.
+`docs/evidence/ansible.txt` is the playbook check, the first apply, and the second apply (`changed=0`). `docs/evidence/rollout.txt` is the v1 to v2 rolling update (`ok=804 fail=0`), the failed v3 readiness gate, and the rollback to v2.
+
+Screenshots in `screenshots/`:
+
+| File | What it shows |
+| --- | --- |
+| `actions-list.png` | Green `truthgraph-ci-cd` runs |
+| `actions-run.png` | test, build-push, and deploy, all green |
+| `workflow.png` | The workflow file on GitHub |
+| `pipeline-diagram.png` | The pipeline diagram |
+| `ansible-run1.png` | First apply, `changed=8` |
+| `ansible-run2.png` | Second apply, `changed=0`, user `truthsvc` |
+| `docker.png` | Images and `/health` |
+| `k8s.png` | Pods and Services, version v2, Neo4j connected |
+| `rolling-update.png` | v1 to v2, `ok=804 fail=0` |
+| `bad-release.png` | v3 readiness stays `0/1`, Service still on v2 |
+| `rollback.png` | Undo back to v2, `/health` ok |
+| `prometheus-targets.png` | Both API pods UP |
+| `grafana-truthgraph.png` | Uptime, replicas, error ratio, latency |
+| `health.png` | `/health` in the browser |
 
 Those commands were applied to the kind cluster already named `ca2` on this host, because that cluster already had the trimmed Prometheus stack. The create-cluster commands above are for a clean machine.
 
